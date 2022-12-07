@@ -16,18 +16,18 @@
 
         android:background="@drawable/et_style"
         android:backgroundTint="#30ffffff"
-        android:text="Massages"
+        android:text="Messages"
         android:textColorLink="@color/black"
         android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/massage"
+    <EditText
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hey! Is Michal Ren here?"
+        android:text="1"
         android:background="@drawable/et_style"
         android:backgroundTint="#30ffffff"
         android:layout_marginTop="25dp"

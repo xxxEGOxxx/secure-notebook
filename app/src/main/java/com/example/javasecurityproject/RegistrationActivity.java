@@ -1,5 +1,6 @@
 package com.example.javasecurityproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
@@ -9,18 +10,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText registrationName;
     private EditText registrationPassword;
     private Button registerBtn;
-
-    public Credentials credentials;
-
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor sharedPreferenceEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,48 +33,50 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationPassword = findViewById(R.id.registrationPassword);
         registerBtn = findViewById(R.id.registrationBtn);
 
-        credentials = new Credentials();
-
-        sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDB", MODE_PRIVATE);
-        sharedPreferenceEditor = sharedPreferences.edit();
-
-        if (sharedPreferences != null) {
-
-            Map<String, ?> preferencesMap = sharedPreferences.getAll();
-
-            if (preferencesMap.size() != 0) {
-                credentials.loadCredentials(preferencesMap);
-            }
-        }
-
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String regUsername = registrationName.getText().toString();
                 String regPassword = registrationPassword.getText().toString();
+                String salt = Encryption.getSaltvalue(8);
 
-                if (validate(regUsername, regPassword)) {
 
-                    if (credentials.checkUsername(regUsername)) {
-                        Toast.makeText(RegistrationActivity.this, "Username already taken", Toast.LENGTH_SHORT).show();
-                    } else {
+                Context context = getApplicationContext();
+                SharedPreferences sharedPref = context.getSharedPreferences(
+                        regUsername, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
 
-                        credentials.addCredentials(regUsername, regPassword);
+                String text = "aaofkvmxcj4u6hfkri Mich Ren";
+                String key = Encryption.generateSecurePassword(regPassword, salt);
+                String defaultValue = getResources().getString(0);
 
-                        /* Store the credentials*/
-                        sharedPreferenceEditor.putString(regUsername, regPassword);
-
-                        sharedPreferenceEditor.putString("LastSavedUsername", regUsername);
-                        sharedPreferenceEditor.putString("LastSavedPassword", regPassword);
-
-                        //Commits the changes and adds them to the file
-                        sharedPreferenceEditor.apply();
-
-                        startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
-                        Toast.makeText(RegistrationActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                    }
+                String secureText = null;
+                try {
+                    secureText = Encryption.encrypt(text, key);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
+                editor.putString("text", secureText);
+
+                String plainText = null;
+                try {
+                    plainText = Encryption.decrypt(secureText, key);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                editor.putString("text", plainText);
+
+                try {
+
+                    //editor.putString("text", Encryption.decrypt(sharedPref.getString("text", defaultValue), regPassword));
+                    //Encryption.decrypt(text, Encryption.generateSecurePassword(regPassword, salt)));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                editor.putString("salt", salt);
+                editor.apply();
             }
         });
 
