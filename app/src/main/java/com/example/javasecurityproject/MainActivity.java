@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     public TextView registration;
     public CheckBox rememberUser;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +69,38 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences sharedPref = context.getSharedPreferences(
                         inputName, Context.MODE_PRIVATE);
 
-                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
-                startActivity(intent);
+                System.out.println("--------------------------------------------------------------------------");
+
+                String text = sharedPref.getString("text", null);
+                String salt = sharedPref.getString("salt", null);
+
+
+
+                String key = Encryption.generateSecurePassword(inputPassword, salt);
+
+                String plainText = null;
+                try {
+                    plainText = Encryption.decrypt(text, key);
+                    System.out.println(plainText);
+
+                    Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                    intent.putExtra("salt",salt);
+                    intent.putExtra("plainText", plainText);
+                    intent.putExtra("key", key);
+                    intent.putExtra("inputName", inputName);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(context, "Wrong login or password", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+                /*Credentials credentials = new Credentials();
+
+                credentials.setPlainText(plainText);
+                credentials.setSalt(salt);*/
+
+
             }
         });
     }
-
-
 }

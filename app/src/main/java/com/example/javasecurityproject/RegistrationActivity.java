@@ -22,7 +22,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText registrationName;
     private EditText registrationPassword;
     private Button registerBtn;
-
+    public static String checkString = "ADncaisiD3fN4f4";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +46,10 @@ public class RegistrationActivity extends AppCompatActivity {
                         regUsername, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
 
-                String text = "aaofkvmxcj4u6hfkri Mich Ren";
+                String text = "Mich Ren";
+                text = checkString + " " + text;
                 String key = Encryption.generateSecurePassword(regPassword, salt);
-                String defaultValue = getResources().getString(0);
+                //String defaultValue = getResources().getString(0);
 
                 String secureText = null;
                 try {
@@ -66,7 +67,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                editor.putString("text", plainText);
+
+                //editor.putString("text", plainText);
 
                 try {
 

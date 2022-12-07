@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-
+        android:padding="5dp"
         android:background="@drawable/et_style"
         android:backgroundTint="#30ffffff"
-        android:text="Messages"
+        android:text="Message"
         android:textColorLink="@color/black"
         android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1"
+        android:padding="5dp"
         android:background="@drawable/et_style"
         android:backgroundTint="#30ffffff"
         android:layout_marginTop="25dp"
@@ -37,12 +38,27 @@
         />
 
     <EditText
-        android:layout_width="match_parent"
+        android:id="@+id/editField"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="5dp"
+        android:text=""
         android:background="@drawable/et_style"
         android:backgroundTint="#30ffffff"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="35dp" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/sentBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_toEndOf="@id/editField"
+        android:layout_marginBottom="35dp"
+        android:layout_marginEnd="25dp"
+        android:src="@drawable/ic_baseline_send_24"
+        android:backgroundTint="@color/purple_700"
+        android:background="@drawable/et_style"
+        android:layout_alignParentBottom="true"
+        />
 </RelativeLayout>
