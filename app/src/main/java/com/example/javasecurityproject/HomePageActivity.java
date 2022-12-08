@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
 
@@ -24,7 +26,7 @@ import java.io.OutputStreamWriter;
 import java.util.HashSet;
 
 public class HomePageActivity extends AppCompatActivity {
-    private EditText message;
+    private TextView message;
     private ImageFilterButton sentBtn;
     private EditText editField;
 

@@ -72,6 +72,16 @@
         android:backgroundTint="#30ffffff"
         android:text="@string/login" />
 
+    <TextView
+        android:id="@+id/biometric_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginBtn"
+        android:layout_centerHorizontal="true"
+        android:text="Fingerprint Login?"
+        android:textColor="@color/white"
+        />
+
     <CheckBox
         android:id="@+id/checkRememberUser"
         android:layout_width="wrap_content"
