@@ -70,20 +70,7 @@ public class Encryption
         return finalval;
     }
 
-    /* Method to verify if both password matches or not */
-    public static boolean verifyUserPassword(String providedPassword,
-                                             String securedPassword, String salt)
-    {
-        boolean finalval = false;
 
-        /* Generate New secure password with the same salt */
-        String newSecurePassword = generateSecurePassword(providedPassword, salt);
-
-        /* Check if two passwords are equal */
-        finalval = newSecurePassword.equalsIgnoreCase(securedPassword);
-
-        return finalval;
-    }
     private static final String ALGORITHM = "AES";
     public static String encrypt(String value, String kkey) throws Exception
     {
